@@ -20,19 +20,23 @@ class XylophoneApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: SafeArea(
-          child: ListView.builder(
-            itemBuilder: (_, index) {
-              return GestureDetector(
-                onTap: () => player.play('note${index + 1}.wav'),
-                child: Container(
-                  color: colors[index],
-                  height: 50,
-                ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return ListView.builder(
+                itemBuilder: (_, index) {
+                  return GestureDetector(
+                    onTap: () => player.play('note${index + 1}.wav'),
+                    child: Container(
+                      color: colors[index],
+                      height: constraints.maxHeight / colors.length,
+                    ),
+                  );
+                },
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: colors.length,
               );
             },
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: colors.length,
           ),
         ),
       ),
